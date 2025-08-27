@@ -1,4 +1,4 @@
-import { NgModule } from "@angular/core";
+import { inject, NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { HomeComponent } from "./home/home.component";
 import { CoursesCardListComponent } from "./courses-card-list/courses-card-list.component";
@@ -26,14 +26,11 @@ import {
   EntityDefinitionService,
   EntityMetadataMap,
 } from "@ngrx/data";
-import { compareCourses, Course } from "./model/course";
-
-import { compareLessons, Lesson } from "./model/lesson";
-import { CoursesResolver } from "./courses.resolver";
-import { EffectsModule } from "@ngrx/effects";
-import { CoursesEffects } from "./courses.effects";
+import { compareCourses } from "./model/course";
 import { StoreModule } from "@ngrx/store";
-import { coursesReducer } from "./reducers/course.reducers";
+import { CourseEntityService } from "./services/course-entity.service";
+import { CoursesResolver } from "./services/courses.resolver";
+import { CoursesDataService } from "./services/courses-data.service";
 
 export const coursesRoutes: Routes = [
   {
@@ -46,8 +43,17 @@ export const coursesRoutes: Routes = [
   {
     path: ":courseUrl",
     component: CourseComponent,
+    resolve: {
+      courses: CoursesResolver,
+    },
   },
 ];
+
+const entityMetadata: EntityMetadataMap = {
+  Course: {
+    sortComparer: compareCourses,
+  },
+};
 
 @NgModule({
   imports: [
@@ -68,8 +74,6 @@ export const coursesRoutes: Routes = [
     MatMomentDateModule,
     ReactiveFormsModule,
     RouterModule.forChild(coursesRoutes),
-    EffectsModule.forFeature([CoursesEffects]),
-    StoreModule.forFeature("courses", coursesReducer),
   ],
   declarations: [
     HomeComponent,
@@ -83,8 +87,20 @@ export const coursesRoutes: Routes = [
     EditCourseDialogComponent,
     CourseComponent,
   ],
-  providers: [CoursesHttpService, CoursesResolver],
+  providers: [
+    CoursesHttpService,
+    CoursesResolver,
+    CourseEntityService,
+    CoursesResolver,
+    CoursesDataService,
+  ],
 })
 export class CoursesModule {
-  constructor() {}
+  #eds = inject(EntityDefinitionService);
+  #entityDataService = inject(EntityDataService);
+  #coursesDataService = inject(CoursesDataService);
+  constructor() {
+    this.#eds.registerMetadataMap(entityMetadata);
+    this.#entityDataService.registerService("Course", this.#coursesDataService);
+  }
 }

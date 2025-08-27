@@ -4,7 +4,6 @@ import { Course } from "../model/course";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Observable } from "rxjs";
 import { Update } from "@ngrx/entity";
-import { CourseActions } from "../action-types";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../reducers";
 
@@ -58,13 +57,6 @@ export class EditCourseDialogComponent {
       ...this.course,
       ...this.form.value,
     };
-
-    const update: Update<Course> = {
-      id: course.id,
-      changes: course,
-    };
-
-    this.#store.dispatch(CourseActions.courseUpdated({ update }));
 
     this.#dialogRef.close();
   }
