@@ -1,4 +1,9 @@
-import { Component, inject, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from "@angular/core";
 import { Course } from "../model/course";
 import { Observable } from "rxjs";
 import { defaultDialogConfig } from "../shared/default-dialog-config";
@@ -12,6 +17,7 @@ import { CourseEntityService } from "../services/course-entity.service";
   templateUrl: "./home.component.html",
   styleUrls: ["./home.component.css"],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit {
   promoTotal$: Observable<number>;

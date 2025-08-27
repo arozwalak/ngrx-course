@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   inject,
@@ -18,6 +19,7 @@ import { CourseEntityService } from "../services/course-entity.service";
   templateUrl: "./courses-card-list.component.html",
   styleUrls: ["./courses-card-list.component.css"],
   standalone: false,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursesCardListComponent implements OnInit {
   @Input()
