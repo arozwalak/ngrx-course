@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { Update } from "@ngrx/entity";
 import { Store } from "@ngrx/store";
 import { AppState } from "../../reducers";
+import { CourseEntityService } from "../services/course-entity.service";
 
 @Component({
   selector: "course-dialog",
@@ -19,10 +20,11 @@ export class EditCourseDialogComponent {
   course: Course;
   mode: "create" | "update";
   loading$: Observable<boolean>;
+
   #fb = inject(FormBuilder);
   #dialogRef = inject(MatDialogRef<EditCourseDialogComponent>);
   #data = inject(MAT_DIALOG_DATA);
-  #store = inject(Store<AppState>);
+  #coursesService = inject(CourseEntityService);
 
   constructor() {
     this.dialogTitle = this.#data.dialogTitle;
@@ -58,6 +60,14 @@ export class EditCourseDialogComponent {
       ...this.form.value,
     };
 
-    this.#dialogRef.close();
+    if (this.mode == "update") {
+      this.#coursesService.update(course);
+      this.#dialogRef.close();
+    } else if (this.mode == "create") {
+      this.#coursesService.add(course).subscribe((newCourse) => {
+        console.log("new course", newCourse);
+        this.#dialogRef.close();
+      });
+    }
   }
 }
