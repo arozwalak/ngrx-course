@@ -6,7 +6,7 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Course } from "../model/course";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { Lesson } from "../model/lesson";
 import { delay, map, tap, withLatestFrom } from "rxjs/operators";
 import { CourseEntityService } from "../services/course-entity.service";
