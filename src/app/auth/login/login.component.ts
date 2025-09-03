@@ -16,7 +16,7 @@ import { AuthActions } from "../action-types";
   styleUrls: ["./login.component.scss"],
   standalone: false,
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   form: FormGroup;
 
   #fb = inject(FormBuilder);
@@ -30,8 +30,6 @@ export class LoginComponent implements OnInit {
       password: ["test", [Validators.required]],
     });
   }
-
-  ngOnInit() {}
 
   login() {
     const val = this.form.value;

@@ -1,13 +1,5 @@
 import { isDevMode } from "@angular/core";
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  MetaReducer,
-  on,
-} from "@ngrx/store";
+import { ActionReducer, createReducer, on } from "@ngrx/store";
 import { User } from "../model/user.model";
 import { AuthActions } from "../action-types";
 
@@ -21,14 +13,14 @@ const initialAuthState: AuthState = {
   user: undefined,
 };
 
-export const authReducer = createReducer(
+export const authReducer: ActionReducer<AuthState> = createReducer(
   initialAuthState,
-  on(AuthActions.login, (state, action) => {
+  on(AuthActions.login, (state, action): AuthState => {
     return {
       user: action.user,
     };
   }),
-  on(AuthActions.logout, (state, action) => {
+  on(AuthActions.logout, (state, action): AuthState => {
     return {
       user: undefined,
     };
