@@ -10,7 +10,6 @@ import { StoreModule } from "@ngrx/store";
 import { AuthService } from "./auth.service";
 import { EffectsModule } from "@ngrx/effects";
 import * as fromAuth from "./reducers";
-import { AuthGuard } from "./auth.guard";
 import { AuthEffects } from "./auth.effects";
 
 const routes: Routes = [{ path: "", component: LoginComponent }];
@@ -33,7 +32,7 @@ export class AuthModule {
   static forRoot(): ModuleWithProviders<AuthModule> {
     return {
       ngModule: AuthModule,
-      providers: [AuthService, AuthGuard],
+      providers: [AuthService],
     };
   }
 }

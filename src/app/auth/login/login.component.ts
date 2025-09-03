@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 import { Store } from "@ngrx/store";
@@ -38,7 +38,6 @@ export class LoginComponent {
       .login(val.email, val.password)
       .pipe(
         tap((user) => {
-          console.log("user: ", user);
           this.#store.dispatch(AuthActions.login({ user }));
           this.#router.navigateByUrl("/courses");
         })
