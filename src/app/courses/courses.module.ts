@@ -27,7 +27,6 @@ import {
   EntityMetadataMap,
 } from "@ngrx/data";
 import { compareCourses } from "./model/course";
-import { StoreModule } from "@ngrx/store";
 import { CourseEntityService } from "./services/course-entity.service";
 import { CoursesResolver } from "./services/courses.resolver";
 import { CoursesDataService } from "./services/courses-data.service";
