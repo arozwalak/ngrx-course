@@ -96,12 +96,11 @@ const entityMetadata: EntityMetadataMap = {
     CourseComponent,
   ],
   providers: [
+    CourseEntityService,
     CoursesHttpService,
     CoursesResolver,
-    CourseEntityService,
-    LessonEntityService,
-    CoursesResolver,
     CoursesDataService,
+    LessonEntityService,
   ],
 })
 export class CoursesModule {
